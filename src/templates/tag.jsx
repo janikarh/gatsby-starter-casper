@@ -47,10 +47,15 @@ class TagTemplate extends React.Component {
   render() {
     const {
       location,
-      data: { authors },
+      data: { allMarkdownRemark, authors },
       pageContext: { tag, page, pages, total, limit, prev, next }
     } = this.props;
     const { menuOpen } = this.state;
+
+    const postEdges =
+      allMarkdownRemark && allMarkdownRemark.edges
+        ? allMarkdownRemark.edges
+        : [];
 
     return (
       <Layout location={location}>
@@ -90,7 +95,7 @@ class TagTemplate extends React.Component {
                 next={next}
               >
                 {/* PostListing component renders all the posts */}
-                <PostListing postEdges={nodes} postAuthors={authors.edges} />
+                <PostListing postEdges={postEdges} postAuthors={authors.edges} />
               </PaginatedContent>
             </div>
             {/* The tiny footer at the very bottom */}
